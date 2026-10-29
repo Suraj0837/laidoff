@@ -1,0 +1,155 @@
+---
+import '../styles/global.css';
+import {
+  SITE_METADATA,
+  SITE_URL,
+  SHARE_STORY_FORM_URL,
+  CONTACT_EMAIL,
+} from '../config';
+
+interface Props {
+  title?: string;
+  description?: string;
+  canonicalPath?: string;
+}
+
+const {
+  title = SITE_METADATA.title,
+  description = SITE_METADATA.description,
+  canonicalPath = Astro.url.pathname,
+} = Astro.props;
+
+const canonicalUrl = new URL(canonicalPath, SITE_URL).toString();
+const ogImageUrl = new URL(SITE_METADATA.ogImage, SITE_URL).toString();
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebSite',
+      '@id': `${SITE_URL}/#website`,
+      url: SITE_URL,
+      name: SITE_METADATA.name,
+      description: SITE_METADATA.description,
+      inLanguage: 'en',
+    },
+    {
+      '@type': 'WebPage',
+      '@id': `${canonicalUrl}#webpage`,
+      url: canonicalUrl,
+      name: title,
+      description,
+      isPartOf: {
+        '@id': `${SITE_URL}/#website`,
+      },
+      about: [
+        'AI layoffs',
+        'AI job displacement',
+        'Career transition after artificial intelligence automation',
+      ],
+      inLanguage: 'en',
+    },
+  ],
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Favicon & Sitemap -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+
+    <!-- OpenGraph Metadata (LinkedIn, Reddit, Facebook, etc.) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={SITE_METADATA.name} />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:alt" content={SITE_METADATA.ogImageAlt} />
+
+    <!-- Twitter / X Card Metadata -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+    <meta name="twitter:image:alt" content={SITE_METADATA.ogImageAlt} />
+
+    <!-- Structured Data (JSON-LD) -->
+    <script
+      type="application/ld+json"
+      is:inline
+      set:html={JSON.stringify(structuredData)}
+    />
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
+    <header class="site-header">
+      <div class="container nav-bar">
+        <a href="/" class="brand-link" aria-label="Laid Off Bench Home">
+          <svg
+            class="brand-icon"
+            viewBox="0 0 64 64"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <rect x="8" y="18" width="48" height="6" rx="2" fill="#23201d" />
+            <rect x="8" y="28" width="48" height="6" rx="2" fill="#23201d" />
+            <rect x="4" y="39" width="56" height="6" rx="2" fill="#9c4a2d" />
+            <rect x="12" y="45" width="6" height="12" rx="1.5" fill="#23201d" />
+            <rect x="46" y="45" width="6" height="12" rx="1.5" fill="#23201d" />
+          </svg>
+          <span>Laid Off Bench</span>
+        </a>
+
+        <nav aria-label="Primary navigation">
+          <ul class="nav-links">
+            <li><a href="/#stories">Stories</a></li>
+            <li><a href="/#resources">Resources</a></li>
+            <li><a href="/#about">About</a></li>
+            <li>
+              <a
+                href={SHARE_STORY_FORM_URL}
+                class="btn btn-primary btn-sm"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Share Your Story
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main-content">
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <div class="footer-brand">
+          <strong>Laid Off Bench</strong>
+          <p>Built for people navigating the AI transition.</p>
+        </div>
+
+        <nav aria-label="Footer navigation">
+          <ul class="footer-links">
+            <li><a href="/privacy">Privacy</a></li>
+            <li><a href={`mailto:${CONTACT_EMAIL}`}>Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+    </footer>
+  </body>
+</html>

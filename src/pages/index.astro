@@ -1,0 +1,285 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import {
+  SHARE_STORY_FORM_URL,
+  SITE_URL,
+  CONTACT_EMAIL,
+} from '../config';
+import { DEMO_PLACEHOLDER_STORIES } from '../data/stories';
+import { WHAT_NOW_RESOURCES } from '../data/resources';
+
+const encodedSiteUrl = encodeURIComponent(SITE_URL);
+const encodedShareText = encodeURIComponent(
+  'Laid Off Bench — A quiet, human place documenting real stories from people whose roles were replaced or reshaped by AI.'
+);
+
+const shareLinks = {
+  linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodedSiteUrl}`,
+  x: `https://x.com/intent/tweet?url=${encodedSiteUrl}&text=${encodedShareText}`,
+  reddit: `https://www.reddit.com/submit?url=${encodedSiteUrl}&title=${encodedShareText}`,
+};
+---
+
+<BaseLayout>
+  <!-- 2. HERO SECTION -->
+  <section class="hero" aria-labelledby="hero-heading">
+    <div class="container">
+      <div class="hero-inner">
+        <span class="eyebrow">The Bench</span>
+        <h1 id="hero-heading" class="hero-headline">
+          Laid off because of AI?
+          <span>Take a seat.</span>
+        </h1>
+        <p class="hero-copy">
+          This is a place for people whose roles have been eliminated, reduced,
+          or fundamentally transformed because of rapid AI adoption. Catch your
+          breath, read how others are navigating AI job displacement, and figure
+          out what comes next—together.
+        </p>
+        <div class="hero-actions">
+          <a
+            href={SHARE_STORY_FORM_URL}
+            class="btn btn-primary"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Share Your Story
+          </a>
+          <a href="#stories" class="btn btn-secondary">
+            Read Their Stories
+          </a>
+        </div>
+      </div>
+
+      <div class="bench-divider">
+        <span>No hype. No doomscrolling. Just real people between chapters.</span>
+        <span>Anonymous submissions welcome</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. EXPLANATION SECTION -->
+  <section class="section" aria-labelledby="why-heading">
+    <div class="container">
+      <div class="explanation-box">
+        <span class="eyebrow">Why This Exists</span>
+        <h2 id="why-heading" class="section-title">
+          The human side of the AI transition
+        </h2>
+        <p>
+          Artificial intelligence is creating extraordinary opportunities,
+          accelerating research, and helping small teams build faster than ever.
+          Both things can be true at once: the technology is genuinely useful,
+          and the transition is deeply disruptive for the people living inside
+          it.
+        </p>
+        <blockquote class="explanation-highlight">
+          Behind the headlines about productivity gains and artificial
+          intelligence layoffs are real people suddenly finding that the role
+          they spent years building their career around has changed or
+          disappeared.
+        </blockquote>
+        <p>
+          When your job is replaced by AI or consolidated in an automation
+          restructuring, it can feel strangely isolating. <strong>Laid Off Bench</strong>
+          exists to document those first-hand experiences plainly, without
+          shame, corporate spin, or outrage bait—so no one has to sit with it
+          alone.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. STORIES SECTION -->
+  <section id="stories" class="section" aria-labelledby="stories-heading">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">On the Bench</span>
+        <h2 id="stories-heading" class="section-title">
+          Stories from the transition
+        </h2>
+        <p class="section-lead">
+          First-hand accounts of how roles across industries are shifting, and
+          how people are rebuilding after AI layoffs.
+        </p>
+      </div>
+
+      <div class="demo-notice" role="note" aria-label="Placeholder stories notice">
+        <strong>Note — Demo Placeholders:</strong> The four cards below are
+        illustrative <strong>DEMO</strong> examples showing how community
+        stories will be formatted once submissions are reviewed. They are not
+        real user submissions.
+      </div>
+
+      <div class="stories-grid">
+        {
+          DEMO_PLACEHOLDER_STORIES.map((item) => (
+            <article
+              class="story-card"
+              data-demo-placeholder={item.isDemoPlaceholder ? 'true' : 'false'}
+            >
+              <div>
+                <span class="story-badge">{item.badgeLabel}</span>
+                <h3 class="story-role">{item.role}</h3>
+                <ul class="story-meta" aria-label="Role details">
+                  <li>
+                    <strong>Industry:</strong> {item.industry}
+                  </li>
+                  <li>
+                    <strong>Country:</strong> {item.country}
+                  </li>
+                </ul>
+                <p class="story-body">{item.shortStory}</p>
+              </div>
+
+              <div class="story-now">
+                <span class="story-now-label">What I'm doing now</span>
+                <p>{item.whatImDoingNow}</p>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. SHARE YOUR STORY SECTION -->
+  <section id="share" class="section" aria-labelledby="share-heading">
+    <div class="container">
+      <div class="share-panel">
+        <span class="eyebrow" style="color: #e6a187;">Pull Up a Seat</span>
+        <h2 id="share-heading">Have you been laid off or displaced by AI?</h2>
+        <p>
+          Whether your entire department was automated, your freelance workload
+          vanished overnight, or your day-to-day craft was reduced to reviewing
+          machine output—your story matters and helps others make sense of what
+          is happening across the workforce.
+        </p>
+        <ul class="share-reassurance">
+          <li>
+            <strong>100% anonymous option:</strong> Share only your role,
+            industry, and country—no name or employer required.
+          </li>
+          <li>
+            <strong>Takes 3 minutes:</strong> Tell us what changed in your role
+            and what you are doing next.
+          </li>
+          <li>
+            <strong>Human reviewed:</strong> Every story is read before being
+            added to the bench.
+          </li>
+        </ul>
+        <a
+          href={SHARE_STORY_FORM_URL}
+          class="btn btn-primary"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Share Your Story
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. WHAT NOW? (RESOURCES) SECTION -->
+  <section id="resources" class="section" aria-labelledby="resources-heading">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">What Now?</span>
+        <h2 id="resources-heading" class="section-title">
+          Figuring out your next step
+        </h2>
+        <p class="section-lead">
+          Practical starting points while you are sitting on the bench. No one
+          can promise which careers are permanently &ldquo;AI-proof,&rdquo; so
+          focus on grounded steps you can control right now.
+        </p>
+      </div>
+
+      <div class="resources-grid">
+        {
+          WHAT_NOW_RESOURCES.map((category) => (
+            <article class="resource-card">
+              <h3>{category.title}</h3>
+              <p class="resource-summary">{category.summary}</p>
+              <ul class="resource-points">
+                {category.practicalPoints.map((point) => (
+                  <li>{point}</li>
+                ))}
+              </ul>
+            </article>
+          ))
+        }
+      </div>
+
+      <p class="resources-disclaimer">
+        Note: We intentionally avoid listing supposedly &ldquo;AI-proof&rdquo;
+        jobs. Technology and labor markets shift too quickly for easy guarantees—the
+        healthiest approach is building adaptable skills, financial breathing
+        room, and honest community.
+      </p>
+    </div>
+  </section>
+
+  <!-- 7. ABOUT SECTION -->
+  <section id="about" class="section" aria-labelledby="about-heading">
+    <div class="container about-grid">
+      <div>
+        <span class="eyebrow">About the Project</span>
+        <h2 id="about-heading" class="section-title">
+          Independent, human, and grounded in reality
+        </h2>
+        <p>
+          <strong>Laid Off Bench</strong> is an independent project documenting
+          how the artificial intelligence transition is affecting real workers
+          around the world.
+        </p>
+        <p>
+          This project is not anti-AI. AI tools are unlocking real progress in
+          science, software, accessibility, and everyday work. At the same time,
+          rapid technological shifts always carry human costs, and the people
+          absorbing that disruption deserve a respectful place to be heard.
+        </p>
+        <p>
+          Questions, press inquiries, or feedback? Reach out directly at{' '}
+          <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+        </p>
+      </div>
+
+      <aside class="share-bench-card" aria-label="Share Laid Off Bench">
+        <h3>Pass the bench along</h3>
+        <p>
+          Know someone navigating AI layoffs or a sudden role change? Share this
+          page on LinkedIn, Reddit, or X so they know they aren&rsquo;t the only
+          one.
+        </p>
+        <div class="share-links">
+          <a
+            href={shareLinks.linkedin}
+            class="share-link"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Share on LinkedIn
+          </a>
+          <a
+            href={shareLinks.reddit}
+            class="share-link"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Share on Reddit
+          </a>
+          <a
+            href={shareLinks.x}
+            class="share-link"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Post on X
+          </a>
+        </div>
+      </aside>
+    </div>
+  </section>
+</BaseLayout>

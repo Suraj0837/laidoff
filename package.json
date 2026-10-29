@@ -1,0 +1,25 @@
+{
+  "name": "laid-off-bench",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Laid Off Bench — A place for people whose roles have been eliminated, reduced, or transformed by AI.",
+  "engines": {
+    "node": ">=20.3.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^5.1.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.4",
+    "typescript": "^5.7.2"
+  }
+}

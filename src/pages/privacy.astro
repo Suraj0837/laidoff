@@ -1,0 +1,54 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { CONTACT_EMAIL } from '../config';
+---
+
+<BaseLayout
+  title="Privacy — Laid Off Bench"
+  description="Privacy principles for Laid Off Bench: no tracking cookies, anonymous story options, and full control over what you share."
+  canonicalPath="/privacy"
+>
+  <section class="section" aria-labelledby="privacy-heading">
+    <div class="container">
+      <div class="explanation-box">
+        <span class="eyebrow">Privacy</span>
+        <h1 id="privacy-heading" class="section-title">
+          Simple, human privacy
+        </h1>
+        <p>
+          <strong>Laid Off Bench</strong> is built on trust. Speaking openly
+          about a layoff or career disruption requires knowing your privacy is
+          respected.
+        </p>
+
+        <h2>1. No tracking cookies</h2>
+        <p>
+          This website does not use tracking cookies, retargeting pixels, or
+          third-party advertising scripts. Basic, privacy-first aggregate page
+          traffic is measured via Cloudflare Web Analytics without fingerprinting
+          or storing cookies on your device.
+        </p>
+
+        <h2>2. Anonymous story submissions</h2>
+        <p>
+          When you choose to share your story, you may submit it completely
+          anonymously. We only publish general context—such as your role,
+          industry, country, and experience—never your name, email address, or
+          employer unless you explicitly ask us to include them.
+        </p>
+
+        <h2>3. Editing or removing your story</h2>
+        <p>
+          If you have shared a story and ever want it updated or removed from
+          the site for any reason, email{' '}
+          <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a> and we will
+          take care of it promptly.
+        </p>
+
+        <p style="margin-top: 2rem;">
+          <a href="/" class="btn btn-secondary">&larr; Back to the Bench</a>
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
